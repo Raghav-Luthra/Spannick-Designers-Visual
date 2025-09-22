@@ -18,9 +18,9 @@ export const defaultWardrobe: WardrobeItem[] = [
     url: 'https://raw.githubusercontent.com/ammaarreshi/app-images/refs/heads/main/Gemini-tee.png',
   },
   {
-    id: 'ivory-sherwani',
-    name: 'Ivory Sherwani',
-    url: 'https://storage.googleapis.com/gemini-95-icons/ivory-sherwani.png',
+    id: 'white-sherwani',
+    name: 'white Sherwani',
+    url: 'https://github.com/Raghav-Luthra/Spannick-Designers-Visual/blob/main/whitesherwani.png',
   },
   {
     id: 'black-jodhpuri',
