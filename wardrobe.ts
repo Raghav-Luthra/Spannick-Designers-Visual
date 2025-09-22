@@ -25,7 +25,7 @@ export const defaultWardrobe: WardrobeItem[] = [
   {
     id: 'black-jodhpuri',
     name: 'Black Jodhpuri Suit',
-    url: 'https://storage.googleapis.com/gemini-95-icons/black-jodhpuri.png',
+    url: 'https://drive.google.com/file/d/1OnvcZcrYNwkmzM9KQuusmO2BY-MiQ9x_/view?usp=share_link',
   },
   {
     id: 'purple-suit',
