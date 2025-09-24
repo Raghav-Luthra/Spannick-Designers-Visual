@@ -20,16 +20,16 @@ export const defaultWardrobe: WardrobeItem[] = [
   {
     id: 'white-sherwani',
     name: 'white Sherwani',
-    url: 'https://github.com/Raghav-Luthra/Spannick-Designers-Visual/blob/main/whitesherwani.png',
+    url: 'https://raw.githubusercontent.com/Raghav-Luthra/Spannick-Designers-Visual/main/whitesherwani.png',
   },
   {
     id: 'black-jodhpuri',
     name: 'Black Jodhpuri Suit',
-    url: 'https://drive.google.com/file/d/1OnvcZcrYNwkmzM9KQuusmO2BY-MiQ9x_/view?usp=share_link',
+    url: 'https://raw.githubusercontent.com/Raghav-Luthra/Spannick-Designers-Visual/main/blacksherwani.png',
   },
   {
     id: 'purple-suit',
     name: 'Purple Business Suit',
-    url: 'https://storage.googleapis.com/gemini-95-icons/purple-suit.png',
+    url: 'https://raw.githubusercontent.com/Raghav-Luthra/Spannick-Designers-Visual/main/purplesuit.png',
   }
 ];
