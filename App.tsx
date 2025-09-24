@@ -210,13 +210,13 @@ const App: React.FC = () => {
   return (
     <div className="font-sans">
         {!modelImageUrl ? (
-          <div className="w-screen min-h-screen flex items-start sm:items-center justify-center p-4 pb-20">
+          <div className="w-screen min-h-screen flex items-start sm:items-center justify-center p-2 sm:p-4 pb-16 sm:pb-20">
             <StartScreen onModelFinalized={handleModelFinalized} />
           </div>
         ) : (
           <div className="relative flex flex-col h-screen overflow-hidden">
             <main className="flex-grow relative flex flex-col md:flex-row overflow-hidden">
-              <div className="w-full h-full flex-grow flex items-center justify-center pb-16 relative">
+              <div className="w-full h-full flex-grow flex items-center justify-center pb-12 sm:pb-16 relative">
                 <Canvas 
                   displayImageUrl={displayImageUrl}
                   onStartOver={handleStartOver}
@@ -230,20 +230,20 @@ const App: React.FC = () => {
               </div>
 
               <aside 
-                className={`absolute md:relative md:flex-shrink-0 bottom-0 right-0 h-auto md:h-full w-full md:w-1/3 md:max-w-sm glass-panel flex flex-col border-t md:border-t-0 md:border-l border-gray-200 transition-transform duration-300 ease-in-out ${isSheetCollapsed ? 'translate-y-[calc(100%-4.5rem)]' : 'translate-y-0'} md:translate-y-0`}
+                className={`absolute md:relative md:flex-shrink-0 bottom-0 right-0 h-auto md:h-full w-full md:w-1/3 md:max-w-sm glass-panel flex flex-col border-t md:border-t-0 md:border-l border-gray-200 transition-transform duration-300 ease-in-out ${isSheetCollapsed ? 'translate-y-[calc(100%-3.5rem)]' : 'translate-y-0'} md:translate-y-0`}
               >
                   <button 
                     onClick={() => setIsSheetCollapsed(!isSheetCollapsed)} 
-                    className="md:hidden w-full h-10 flex items-center justify-center bg-white border-b border-gray-200"
+                    className="md:hidden w-full h-8 sm:h-10 flex items-center justify-center bg-white border-b border-gray-200"
                     aria-label={isSheetCollapsed ? 'Expand panel' : 'Collapse panel'}
                   >
-                    {isSheetCollapsed ? <ChevronUpIcon className="w-6 h-6 text-gray-600" /> : <ChevronDownIcon className="w-6 h-6 text-gray-600" />}
+                    {isSheetCollapsed ? <ChevronUpIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" /> : <ChevronDownIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" />}
                   </button>
-                  <div className="p-4 md:p-6 pb-20 overflow-y-auto flex-grow flex flex-col gap-8">
+                  <div className="p-3 sm:p-4 md:p-6 pb-16 sm:pb-20 overflow-y-auto flex-grow flex flex-col gap-6 sm:gap-8">
                     {error && (
-                      <div className="glass-panel border-l-4 border-red-400 text-red-400 p-4 mb-4 rounded-lg luxury-glow" role="alert">
-                        <p className="font-bold">Error</p>
-                        <p>{error}</p>
+                      <div className="glass-panel border-l-4 border-red-400 text-red-400 p-3 sm:p-4 mb-3 sm:mb-4 rounded-lg luxury-glow" role="alert">
+                        <p className="font-bold text-sm sm:text-base">Error</p>
+                        <p className="text-xs sm:text-sm">{error}</p>
                       </div>
                     )}
                     <OutfitStack 
@@ -263,7 +263,7 @@ const App: React.FC = () => {
                 <div className="fixed inset-0 glass-panel backdrop-blur-sm flex flex-col items-center justify-center z-50 luxury-glow-intense">
                   <Spinner />
                   {loadingMessage && (
-                    <p className="text-lg gold-accent mt-6 text-center px-4">{loadingMessage}</p>
+                    <p className="text-base sm:text-lg gold-accent mt-4 sm:mt-6 text-center px-3 sm:px-4">{loadingMessage}</p>
                   )}
                 </div>
               )}

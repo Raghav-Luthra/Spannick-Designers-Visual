@@ -83,9 +83,9 @@ const WardrobePanel: React.FC<WardrobePanelProps> = ({ onGarmentSelect, activeGa
     };
 
   return (
-    <div className="pt-8 border-t border-gold-500/30">
-        <h2 className="text-xl luxury-heading mb-4">Atelier Collection</h2>
-        <div className="grid grid-cols-3 gap-3">
+    <div className="pt-6 sm:pt-8 border-t border-gold-500/30">
+        <h2 className="text-lg sm:text-xl luxury-heading mb-3 sm:mb-4">Atelier Collection</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
             {wardrobe.map((item) => {
             const isActive = activeGarmentIds.includes(item.id);
             return (
@@ -98,26 +98,26 @@ const WardrobePanel: React.FC<WardrobePanelProps> = ({ onGarmentSelect, activeGa
                 >
                 <img src={item.url} alt={item.name} className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 backdrop-blur-sm">
-                    <p className="text-white text-xs font-bold text-center p-2 tracking-wide">{item.name}</p>
+                    <p className="text-white text-xs sm:text-sm font-bold text-center p-1 sm:p-2 tracking-wide">{item.name}</p>
                 </div>
                 {isActive && (
                     <div className="absolute inset-0 bg-yellow-600 bg-opacity-80 flex items-center justify-center backdrop-blur-sm">
-                        <CheckCircleIcon className="w-8 h-8 text-black luxury-glow" />
+                        <CheckCircleIcon className="w-6 h-6 sm:w-8 sm:h-8 text-black luxury-glow" />
                     </div>
                 )}
                 </button>
             );
             })}
             <label htmlFor="custom-garment-upload" className={`relative aspect-square border-2 border-dashed border-yellow-600/40 rounded-lg flex flex-col items-center justify-center text-gray-400 transition-colors luxury-card-3d ${isLoading ? 'cursor-not-allowed bg-gray-800/50' : 'hover:border-yellow-600 hover:text-yellow-600 cursor-pointer'}`}>
-                <UploadCloudIcon className="w-7 h-7 mb-2"/>
-                <span className="text-xs text-center tracking-wide">Upload</span>
+                <UploadCloudIcon className="w-5 h-5 sm:w-7 sm:h-7 mb-1 sm:mb-2"/>
+                <span className="text-xs sm:text-sm text-center tracking-wide">Upload</span>
                 <input id="custom-garment-upload" type="file" className="hidden" accept="image/png, image/jpeg, image/webp, image/avif, image/heic, image/heif" onChange={handleFileChange} disabled={isLoading}/>
             </label>
         </div>
         {wardrobe.length === 0 && (
-             <p className="text-center text-sm text-gray-400 mt-6 italic">Your bespoke pieces will appear here.</p>
+             <p className="text-center text-xs sm:text-sm text-gray-400 mt-4 sm:mt-6 italic">Your bespoke pieces will appear here.</p>
         )}
-        {error && <p className="text-red-400 text-sm mt-4 p-3 glass-panel rounded-lg border border-red-400/30 luxury-glow">{error}</p>}
+        {error && <p className="text-red-400 text-xs sm:text-sm mt-3 sm:mt-4 p-2 sm:p-3 glass-panel rounded-lg border border-red-400/30 luxury-glow">{error}</p>}
     </div>
   );
 };

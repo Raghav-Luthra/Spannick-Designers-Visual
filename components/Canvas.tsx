@@ -69,14 +69,15 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
   };
   
   return (
-    <div className="w-full h-full flex items-center justify-center p-4 relative group perspective-luxury">
+    <div className="w-full h-full flex items-center justify-center p-2 sm:p-4 relative group perspective-luxury">
       {/* Start Over Button */}
       <button 
           onClick={onStartOver}
-          className="absolute top-6 left-6 z-30 flex items-center justify-center text-center btn-secondary py-3 px-6 text-sm font-semibold uppercase tracking-wider luxury-glow"
+          className="absolute top-3 left-3 sm:top-6 sm:left-6 z-30 flex items-center justify-center text-center btn-secondary py-2 px-3 sm:py-3 sm:px-6 text-xs sm:text-sm font-semibold uppercase tracking-wider luxury-glow"
       >
-          <RotateCcwIcon className="w-4 h-4 mr-2" />
-          NEW SESSION
+          <RotateCcwIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+          <span className="hidden sm:inline">NEW SESSION</span>
+          <span className="sm:hidden">NEW</span>
       </button>
 
       {/* Image Display or Placeholder */}
@@ -89,9 +90,9 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
             className="max-w-full max-h-full object-contain transition-opacity duration-300 animate-luxury-fade-in rounded-2xl"
           />
         ) : (
-            <div className="w-[400px] h-[600px] glass-panel border border-yellow-600/30 rounded-2xl flex flex-col items-center justify-center luxury-glow">
+            <div className="w-[280px] h-[420px] sm:w-[320px] sm:h-[480px] md:w-[400px] md:h-[600px] glass-panel border border-yellow-600/30 rounded-2xl flex flex-col items-center justify-center luxury-glow">
               <Spinner />
-              <p className="text-md gold-accent mt-6 tracking-wider">Preparing Avatar...</p>
+              <p className="text-sm sm:text-base gold-accent mt-4 sm:mt-6 tracking-wider">Preparing Avatar...</p>
             </div>
         )}
         
@@ -99,7 +100,7 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
               <div className="absolute inset-0 glass-panel backdrop-blur-sm flex flex-col items-center justify-center z-20 rounded-2xl luxury-glow-intense">
                   <Spinner />
                   {loadingMessage && (
-                      <p className="text-lg gold-accent mt-6 text-center px-4 tracking-wide">{loadingMessage}</p>
+                      <p className="text-sm sm:text-base lg:text-lg gold-accent mt-4 sm:mt-6 text-center px-3 sm:px-4 tracking-wide">{loadingMessage}</p>
                   )}
               </div>
           )}
@@ -108,20 +109,20 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
       {/* Pose Controls */}
       {displayImageUrl && !isLoading && (
         <div 
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-luxury-slide-up"
+          className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-luxury-slide-up"
           onMouseEnter={() => setIsPoseMenuOpen(true)}
           onMouseLeave={() => setIsPoseMenuOpen(false)}
         >
           {/* Pose popover menu */}
               {isPoseMenuOpen && (
-                  <div className="absolute bottom-full mb-4 w-72 glass-panel rounded-2xl p-4 border border-yellow-600/30 animate-luxury-fade-in luxury-glow">
-                      <div className="grid grid-cols-2 gap-3">
+                  <div className="absolute bottom-full mb-3 sm:mb-4 w-64 sm:w-72 glass-panel rounded-2xl p-3 sm:p-4 border border-yellow-600/30 animate-luxury-fade-in luxury-glow">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                           {poseInstructions.map((pose, index) => (
                               <button
                                   key={pose}
                                   onClick={() => onSelectPose(index)}
                                   disabled={isLoading || index === currentPoseIndex}
-                                  className="w-full text-left text-xs font-medium text-gray-200 p-3 rounded-lg hover:bg-yellow-600/20 disabled:opacity-70 disabled:bg-yellow-600/30 disabled:font-bold disabled:cursor-not-allowed transition-all duration-200 tracking-wide"
+                                  className="w-full text-left text-xs sm:text-sm font-medium text-gray-200 p-2 sm:p-3 rounded-lg hover:bg-yellow-600/20 disabled:opacity-70 disabled:bg-yellow-600/30 disabled:font-bold disabled:cursor-not-allowed transition-all duration-200 tracking-wide"
                               >
                                   {pose}
                               </button>
@@ -130,25 +131,25 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
                   </div>
               )}
           
-          <div className="flex items-center justify-center gap-3 glass-panel rounded-2xl p-3 border border-yellow-600/30 luxury-glow">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 glass-panel rounded-2xl p-2 sm:p-3 border border-yellow-600/30 luxury-glow">
             <button 
               onClick={handlePreviousPose}
               aria-label="Previous pose"
-              className="p-3 rounded-lg hover:bg-yellow-600/20 transition-all disabled:opacity-50 btn-secondary"
+              className="p-2 sm:p-3 rounded-lg hover:bg-yellow-600/20 transition-all disabled:opacity-50 btn-secondary"
               disabled={isLoading}
             >
-              <ChevronLeftIcon className="w-5 h-5 text-gray-200" />
+              <ChevronLeftIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-200" />
             </button>
-            <span className="text-sm font-semibold text-gray-200 w-52 text-center truncate tracking-wide" title={poseInstructions[currentPoseIndex]}>
+            <span className="text-xs sm:text-sm font-semibold text-gray-200 w-32 sm:w-52 text-center truncate tracking-wide" title={poseInstructions[currentPoseIndex]}>
               {poseInstructions[currentPoseIndex]}
             </span>
             <button 
               onClick={handleNextPose}
               aria-label="Next pose"
-              className="p-3 rounded-lg hover:bg-yellow-600/20 transition-all disabled:opacity-50 btn-secondary"
+              className="p-2 sm:p-3 rounded-lg hover:bg-yellow-600/20 transition-all disabled:opacity-50 btn-secondary"
               disabled={isLoading}
             >
-              <ChevronRightIcon className="w-5 h-5 text-gray-200" />
+              <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-200" />
             </button>
           </div>
         </div>
