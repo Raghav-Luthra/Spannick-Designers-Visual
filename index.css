@@ -396,6 +396,17 @@ body::after {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  /* Ensure no horizontal overflow */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Optimize container spacing */
+  .luxury-card-3d {
+    margin: 4px;
+    padding: 12px !important;
+  }
+  
   .luxury-card-3d:hover {
     transform: translateZ(15px) rotateY(4deg) rotateX(2deg);
   }
@@ -439,6 +450,11 @@ body::after {
 }
 
 @media (max-width: 480px) {
+  /* Further optimize for small screens */
+  body {
+    font-size: 13px;
+  }
+  
   .luxury-heading {
     font-size: 2rem !important;
   }
@@ -455,7 +471,13 @@ body::after {
 
   .luxury-card-3d {
     margin: 4px;
-    padding: 12px !important;
+    padding: 8px !important;
+  }
+  
+  /* Ensure images don't overflow */
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 

@@ -27,7 +27,7 @@ const OutfitStack: React.FC<OutfitStackProps> = ({ outfitHistory, onRemoveLastGa
                   {index + 1}
                 </span>
                 {layer.garment && (
-                    <img src={layer.garment.url} alt={layer.garment.name} className="flex-shrink-0 w-10 h-10 sm:w-14 sm:h-14 object-cover rounded-lg mr-2 sm:mr-4 border border-yellow-600/30" />
+                    <img src={layer.garment.url} alt={layer.garment.name} className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-cover rounded-lg mr-2 sm:mr-3 border border-yellow-600/30" />
                 )}
                 <span className="font-semibold text-gray-200 truncate tracking-wide text-sm sm:text-base" title={layer.garment?.name}>
                   {layer.garment ? layer.garment.name : 'Base Avatar'}

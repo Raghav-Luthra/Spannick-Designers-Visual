@@ -93,7 +93,7 @@ const WardrobePanel: React.FC<WardrobePanelProps> = ({ onGarmentSelect, activeGa
                 key={item.id}
                 onClick={() => handleGarmentClick(item)}
                 disabled={isLoading || isActive}
-                className="relative aspect-square border border-yellow-600/30 rounded-lg overflow-hidden transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600 group disabled:opacity-60 disabled:cursor-not-allowed luxury-card-3d hover:border-yellow-600"
+                className="relative aspect-square w-full max-w-[120px] sm:max-w-[140px] border border-yellow-600/30 rounded-lg overflow-hidden transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600 group disabled:opacity-60 disabled:cursor-not-allowed luxury-card-3d hover:border-yellow-600 mx-auto"
                 aria-label={`Select ${item.name}`}
                 >
                 <img src={item.url} alt={item.name} className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" />

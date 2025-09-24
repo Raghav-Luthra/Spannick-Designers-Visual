@@ -96,7 +96,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onModelFinalized }) => {
               firstImage="https://storage.googleapis.com/gemini-95-icons/asr-tryon.jpg"
               secondImage="https://storage.googleapis.com/gemini-95-icons/asr-tryon-model.png"
               slideMode="drag"
-              className="w-full max-w-xs sm:max-w-sm aspect-[2/3] rounded-2xl bg-gray-900 border-2 border-yellow-600/30 shadow-lg luxury-card-3d luxury-glow"
+              className="w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] aspect-[2/3] rounded-2xl bg-gray-900 border-2 border-yellow-600/30 shadow-lg luxury-card-3d luxury-glow"
             />
             <div className="mt-4 sm:mt-6 text-center">
               <p className="gold-accent font-semibold text-xs sm:text-sm uppercase tracking-wider">Drag to Compare</p>
@@ -156,13 +156,13 @@ const StartScreen: React.FC<StartScreenProps> = ({ onModelFinalized }) => {
           </div>
           <div className="md:w-1/2 w-full flex items-center justify-center px-4 md:px-0">
             <div 
-              className={`relative rounded-2xl transition-all duration-300 ease-in-out luxury-card-3d ${isGenerating ? 'border-2 border-yellow-500 luxury-glow-intense' : 'border-2 border-yellow-600/30'}`}
+              className={`relative rounded-2xl transition-all duration-300 ease-in-out luxury-card-3d ${isGenerating ? 'border-2 border-yellow-500 luxury-glow-intense' : 'border-2 border-yellow-600/30'} max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] mx-auto`}
             >
               <Compare
                 firstImage={userImageUrl}
                 secondImage={generatedModelUrl ?? userImageUrl}
                 slideMode="drag"
-                className="w-[240px] h-[360px] sm:w-[280px] sm:h-[420px] md:w-[320px] md:h-[480px] lg:w-[400px] lg:h-[600px] rounded-2xl bg-gray-900 shadow-lg"
+                className="w-[200px] h-[300px] sm:w-[240px] sm:h-[360px] md:w-[280px] md:h-[420px] lg:w-[320px] lg:h-[480px] rounded-2xl bg-gray-900 shadow-lg"
               />
             </div>
           </div>

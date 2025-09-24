@@ -216,7 +216,7 @@ const App: React.FC = () => {
         ) : (
           <div className="relative flex flex-col h-screen overflow-hidden">
             <main className="flex-grow relative flex flex-col md:flex-row overflow-hidden">
-              <div className="w-full h-full flex-grow flex items-center justify-center pb-12 sm:pb-16 relative">
+              <div className="w-full h-full flex-grow flex items-center justify-center pb-12 sm:pb-16 relative px-2 sm:px-4">
                 <Canvas 
                   displayImageUrl={displayImageUrl}
                   onStartOver={handleStartOver}
@@ -230,7 +230,7 @@ const App: React.FC = () => {
               </div>
 
               <aside 
-                className={`absolute md:relative md:flex-shrink-0 bottom-0 right-0 h-auto md:h-full w-full md:w-1/3 md:max-w-sm glass-panel flex flex-col border-t md:border-t-0 md:border-l border-gray-200 transition-transform duration-300 ease-in-out ${isSheetCollapsed ? 'translate-y-[calc(100%-3.5rem)]' : 'translate-y-0'} md:translate-y-0`}
+                className={`absolute md:relative md:flex-shrink-0 bottom-0 right-0 h-auto md:h-full w-full md:w-80 md:max-w-xs glass-panel flex flex-col border-t md:border-t-0 md:border-l border-gray-200 transition-transform duration-300 ease-in-out ${isSheetCollapsed ? 'translate-y-[calc(100%-3.5rem)]' : 'translate-y-0'} md:translate-y-0`}
               >
                   <button 
                     onClick={() => setIsSheetCollapsed(!isSheetCollapsed)} 

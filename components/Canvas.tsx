@@ -87,10 +87,10 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
             key={displayImageUrl} // Use key to force re-render and trigger animation on image change
             src={displayImageUrl}
             alt="Virtual try-on model"
-            className="max-w-full max-h-full object-contain transition-opacity duration-300 animate-luxury-fade-in rounded-2xl"
+            className="w-full h-full max-w-[200px] max-h-[300px] sm:max-w-[240px] sm:max-h-[360px] md:max-w-[280px] md:max-h-[420px] lg:max-w-[320px] lg:max-h-[480px] object-contain transition-opacity duration-300 animate-luxury-fade-in rounded-2xl mx-auto"
           />
         ) : (
-            <div className="w-[280px] h-[420px] sm:w-[320px] sm:h-[480px] md:w-[400px] md:h-[600px] glass-panel border border-yellow-600/30 rounded-2xl flex flex-col items-center justify-center luxury-glow">
+            <div className="w-[200px] h-[300px] sm:w-[240px] sm:h-[360px] md:w-[280px] md:h-[420px] lg:w-[320px] lg:h-[480px] glass-panel border border-yellow-600/30 rounded-2xl flex flex-col items-center justify-center luxury-glow mx-auto">
               <Spinner />
               <p className="text-sm sm:text-base gold-accent mt-4 sm:mt-6 tracking-wider">Preparing Avatar...</p>
             </div>
