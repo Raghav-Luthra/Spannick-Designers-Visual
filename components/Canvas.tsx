@@ -69,11 +69,11 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
   };
   
   return (
-    <div className="w-full h-full flex items-center justify-center p-2 sm:p-4 relative group perspective-luxury">
+    <div className="w-full h-full flex items-center justify-center p-2 sm:p-4 relative group">
       {/* Start Over Button */}
       <button 
           onClick={onStartOver}
-          className="absolute top-3 left-3 sm:top-6 sm:left-6 z-30 flex items-center justify-center text-center btn-secondary py-2 px-3 sm:py-3 sm:px-6 text-xs sm:text-sm font-semibold uppercase tracking-wider luxury-glow"
+          className="absolute top-3 left-3 sm:top-6 sm:left-6 z-30 flex items-center justify-center text-center btn-secondary py-2 px-3 sm:py-3 sm:px-6 text-xs sm:text-sm font-semibold uppercase tracking-wider"
       >
           <RotateCcwIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
           <span className="hidden sm:inline">NEW SESSION</span>
@@ -81,23 +81,23 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
       </button>
 
       {/* Image Display or Placeholder */}
-      <div className="relative w-full h-full flex items-center justify-center luxury-card-3d rounded-2xl overflow-hidden animate-luxury-float">
+      <div className="relative w-full h-full flex items-center justify-center luxury-card-3d rounded-2xl overflow-hidden">
         {displayImageUrl ? (
           <img
             key={displayImageUrl} // Use key to force re-render and trigger animation on image change
             src={displayImageUrl}
             alt="Virtual try-on model"
-            className="w-full h-full max-w-[200px] max-h-[300px] sm:max-w-[240px] sm:max-h-[360px] md:max-w-[280px] md:max-h-[420px] lg:max-w-[320px] lg:max-h-[480px] object-contain transition-opacity duration-300 animate-luxury-fade-in rounded-2xl mx-auto"
+            className="w-full h-full max-w-[200px] max-h-[300px] sm:max-w-[240px] sm:max-h-[360px] md:max-w-[280px] md:max-h-[420px] lg:max-w-[320px] lg:max-h-[480px] object-contain transition-opacity duration-300 animate-fade-in rounded-2xl mx-auto"
           />
         ) : (
-            <div className="w-[200px] h-[300px] sm:w-[240px] sm:h-[360px] md:w-[280px] md:h-[420px] lg:w-[320px] lg:h-[480px] glass-panel border border-yellow-600/30 rounded-2xl flex flex-col items-center justify-center luxury-glow mx-auto">
+            <div className="w-[200px] h-[300px] sm:w-[240px] sm:h-[360px] md:w-[280px] md:h-[420px] lg:w-[320px] lg:h-[480px] glass-panel border border-yellow-600/30 rounded-2xl flex flex-col items-center justify-center mx-auto">
               <Spinner />
               <p className="text-sm sm:text-base gold-accent mt-4 sm:mt-6 tracking-wider">Preparing Avatar...</p>
             </div>
         )}
         
           {isLoading && (
-              <div className="absolute inset-0 glass-panel backdrop-blur-sm flex flex-col items-center justify-center z-20 rounded-2xl luxury-glow-intense">
+              <div className="absolute inset-0 glass-panel backdrop-blur-sm flex flex-col items-center justify-center z-20 rounded-2xl">
                   <Spinner />
                   {loadingMessage && (
                       <p className="text-sm sm:text-base lg:text-lg gold-accent mt-4 sm:mt-6 text-center px-3 sm:px-4 tracking-wide">{loadingMessage}</p>
@@ -109,13 +109,13 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
       {/* Pose Controls */}
       {displayImageUrl && !isLoading && (
         <div 
-          className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-luxury-slide-up"
+          className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-slide-up"
           onMouseEnter={() => setIsPoseMenuOpen(true)}
           onMouseLeave={() => setIsPoseMenuOpen(false)}
         >
           {/* Pose popover menu */}
               {isPoseMenuOpen && (
-                  <div className="absolute bottom-full mb-3 sm:mb-4 w-64 sm:w-72 glass-panel rounded-2xl p-3 sm:p-4 border border-yellow-600/30 animate-luxury-fade-in luxury-glow">
+                  <div className="absolute bottom-full mb-3 sm:mb-4 w-64 sm:w-72 glass-panel rounded-2xl p-3 sm:p-4 border border-yellow-600/30 animate-fade-in">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                           {poseInstructions.map((pose, index) => (
                               <button
@@ -131,7 +131,7 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
                   </div>
               )}
           
-          <div className="flex items-center justify-center gap-2 sm:gap-3 glass-panel rounded-2xl p-2 sm:p-3 border border-yellow-600/30 luxury-glow">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 glass-panel rounded-2xl p-2 sm:p-3 border border-yellow-600/30">
             <button 
               onClick={handlePreviousPose}
               aria-label="Previous pose"

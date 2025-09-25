@@ -241,7 +241,7 @@ const App: React.FC = () => {
                   </button>
                   <div className="p-3 sm:p-4 md:p-6 pb-16 sm:pb-20 overflow-y-auto flex-grow flex flex-col gap-6 sm:gap-8">
                     {error && (
-                      <div className="glass-panel border-l-4 border-red-400 text-red-400 p-3 sm:p-4 mb-3 sm:mb-4 rounded-lg luxury-glow" role="alert">
+                      <div className="glass-panel border-l-4 border-red-400 text-red-400 p-3 sm:p-4 mb-3 sm:mb-4 rounded-lg" role="alert">
                         <p className="font-bold text-sm sm:text-base">Error</p>
                         <p className="text-xs sm:text-sm">{error}</p>
                       </div>
@@ -260,7 +260,7 @@ const App: React.FC = () => {
               </aside>
             </main>
               {isLoading && isMobile && (
-                <div className="fixed inset-0 glass-panel backdrop-blur-sm flex flex-col items-center justify-center z-50 luxury-glow-intense">
+                <div className="fixed inset-0 glass-panel backdrop-blur-sm flex flex-col items-center justify-center z-50">
                   <Spinner />
                   {loadingMessage && (
                     <p className="text-base sm:text-lg gold-accent mt-4 sm:mt-6 text-center px-3 sm:px-4">{loadingMessage}</p>

@@ -96,13 +96,13 @@ const WardrobePanel: React.FC<WardrobePanelProps> = ({ onGarmentSelect, activeGa
                 className="relative aspect-square w-full max-w-[120px] sm:max-w-[140px] border border-yellow-600/30 rounded-lg overflow-hidden transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600 group disabled:opacity-60 disabled:cursor-not-allowed luxury-card-3d hover:border-yellow-600 mx-auto"
                 aria-label={`Select ${item.name}`}
                 >
-                <img src={item.url} alt={item.name} className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" />
+                <img src={item.url} alt={item.name} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 backdrop-blur-sm">
                     <p className="text-white text-xs sm:text-sm font-bold text-center p-1 sm:p-2 tracking-wide">{item.name}</p>
                 </div>
                 {isActive && (
                     <div className="absolute inset-0 bg-yellow-600 bg-opacity-80 flex items-center justify-center backdrop-blur-sm">
-                        <CheckCircleIcon className="w-6 h-6 sm:w-8 sm:h-8 text-black luxury-glow" />
+                        <CheckCircleIcon className="w-6 h-6 sm:w-8 sm:h-8 text-black" />
                     </div>
                 )}
                 </button>
@@ -117,7 +117,7 @@ const WardrobePanel: React.FC<WardrobePanelProps> = ({ onGarmentSelect, activeGa
         {wardrobe.length === 0 && (
              <p className="text-center text-xs sm:text-sm text-gray-400 mt-4 sm:mt-6 italic">Your bespoke pieces will appear here.</p>
         )}
-        {error && <p className="text-red-400 text-xs sm:text-sm mt-3 sm:mt-4 p-2 sm:p-3 glass-panel rounded-lg border border-red-400/30 luxury-glow">{error}</p>}
+        {error && <p className="text-red-400 text-xs sm:text-sm mt-3 sm:mt-4 p-2 sm:p-3 glass-panel rounded-lg border border-red-400/30">{error}</p>}
     </div>
   );
 };

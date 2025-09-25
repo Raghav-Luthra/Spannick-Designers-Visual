@@ -20,7 +20,7 @@ const OutfitStack: React.FC<OutfitStackProps> = ({ outfitHistory, onRemoveLastGa
         {outfitHistory.map((layer, index) => (
           <div
             key={layer.garment?.id || 'base'}
-            className="flex items-center justify-between luxury-card-3d p-3 sm:p-4 rounded-lg animate-luxury-fade-in border border-yellow-600/20"
+            className="flex items-center justify-between luxury-card-3d p-3 sm:p-4 rounded-lg animate-fade-in border border-yellow-600/20"
           >
             <div className="flex items-center overflow-hidden">
                 <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 mr-2 sm:mr-4 text-xs font-bold text-black bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full luxury-glow">
