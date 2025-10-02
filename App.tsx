@@ -210,13 +210,13 @@ const App: React.FC = () => {
   return (
     <div className="font-sans">
         {!modelImageUrl ? (
-          <div className="w-screen min-h-screen flex items-start sm:items-center justify-center p-2 sm:p-4 pb-16 sm:pb-20">
+          <div className="w-screen min-h-screen flex items-start sm:items-center justify-center pb-16 sm:pb-20">
             <StartScreen onModelFinalized={handleModelFinalized} />
           </div>
         ) : (
           <div className="relative flex flex-col h-screen overflow-hidden">
             <main className="flex-grow relative flex flex-col md:flex-row overflow-hidden">
-              <div className="w-full h-full flex-grow flex items-center justify-center pb-12 sm:pb-16 relative px-2 sm:px-4">
+              <div className="w-full h-full flex-grow flex items-center justify-center pb-12 sm:pb-16 relative">
                 <Canvas 
                   displayImageUrl={displayImageUrl}
                   onStartOver={handleStartOver}
@@ -239,9 +239,9 @@ const App: React.FC = () => {
                   >
                     {isSheetCollapsed ? <ChevronUpIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" /> : <ChevronDownIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" />}
                   </button>
-                  <div className="p-3 sm:p-4 md:p-6 pb-16 sm:pb-20 overflow-y-auto flex-grow flex flex-col gap-6 sm:gap-8">
+                  <div className="p-4 md:p-6 pb-16 sm:pb-20 overflow-y-auto flex-grow flex flex-col gap-6 sm:gap-8">
                     {error && (
-                      <div className="glass-panel border-l-4 border-red-400 text-red-400 p-3 sm:p-4 mb-3 sm:mb-4 rounded-lg" role="alert">
+                      <div className="glass-panel border-l-4 border-red-400 text-red-400 p-4 mb-4 rounded-lg" role="alert">
                         <p className="font-bold text-sm sm:text-base">Error</p>
                         <p className="text-xs sm:text-sm">{error}</p>
                       </div>

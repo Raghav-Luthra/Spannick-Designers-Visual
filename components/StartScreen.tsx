@@ -63,8 +63,8 @@ const StartScreen: React.FC<StartScreenProps> = ({ onModelFinalized }) => {
   return (
     <>
       {!userImageUrl ? (
-        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-16 animate-fade-in px-4">
-          <div className="lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left luxury-card-3d p-6 lg:p-12">
+        <div className="w-full h-full flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-16 animate-fade-in">
+          <div className="lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left luxury-card-3d p-6 lg:p-12 m-0">
             <div className="max-w-2xl w-full">
               <div className="flex items-center justify-center lg:justify-start mb-4">
                 <div className="w-3 h-3 bg-yellow-600 rounded-full mr-3"></div>
@@ -91,7 +91,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onModelFinalized }) => {
               </div>
             </div>
           </div>
-          <div className="w-full lg:w-1/2 flex flex-col items-center justify-center animate-zoom-in px-4 lg:px-0">
+          <div className="w-full lg:w-1/2 flex flex-col items-center justify-center animate-zoom-in">
             <Compare
               firstImage="https://storage.googleapis.com/gemini-95-icons/asr-tryon.jpg"
               secondImage="https://storage.googleapis.com/gemini-95-icons/asr-tryon-model.png"
@@ -105,8 +105,8 @@ const StartScreen: React.FC<StartScreenProps> = ({ onModelFinalized }) => {
           </div>
         </div>
       ) : (
-        <div className="w-full max-w-7xl mx-auto h-full flex flex-col md:flex-row items-center justify-center gap-6 md:gap-16 animate-slide-up px-4">
-          <div className="md:w-1/2 flex-shrink-0 flex flex-col items-center md:items-start luxury-card-3d p-6 md:p-10">
+        <div className="w-full h-full flex flex-col md:flex-row items-center justify-center gap-6 md:gap-16 animate-slide-up">
+          <div className="md:w-1/2 flex-shrink-0 flex flex-col items-center md:items-start luxury-card-3d p-6 md:p-10 m-0">
             <div className="text-center md:text-left max-w-lg w-full">
               <div className="flex items-center justify-center md:justify-start mb-4">
                 <div className="w-2 h-2 bg-yellow-600 rounded-full mr-3"></div>
@@ -154,7 +154,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onModelFinalized }) => {
                 </div>
               )}
           </div>
-          <div className="md:w-1/2 w-full flex items-center justify-center px-4 md:px-0">
+          <div className="md:w-1/2 w-full flex items-center justify-center">
             <div 
               className={`relative rounded-2xl transition-all duration-300 ease-in-out luxury-card-3d ${isGenerating ? 'border-2 border-yellow-500' : 'border-2 border-yellow-600/30'} max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] mx-auto`}
             >

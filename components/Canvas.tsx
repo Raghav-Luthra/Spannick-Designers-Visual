@@ -69,11 +69,11 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
   };
   
   return (
-    <div className="w-full h-full flex items-center justify-center p-2 sm:p-4 relative group">
+    <div className="w-full h-full flex items-center justify-center relative group">
       {/* Start Over Button */}
       <button 
           onClick={onStartOver}
-          className="absolute top-3 left-3 sm:top-6 sm:left-6 z-30 flex items-center justify-center text-center btn-secondary py-2 px-3 sm:py-3 sm:px-6 text-xs sm:text-sm font-semibold uppercase tracking-wider"
+          className="absolute top-4 left-4 z-30 flex items-center justify-center text-center btn-secondary py-2 px-3 sm:py-3 sm:px-6 text-xs sm:text-sm font-semibold uppercase tracking-wider"
       >
           <RotateCcwIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
           <span className="hidden sm:inline">NEW SESSION</span>
