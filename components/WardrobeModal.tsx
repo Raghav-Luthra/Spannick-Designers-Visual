@@ -13,7 +13,6 @@ interface WardrobePanelProps {
   wardrobe: WardrobeItem[];
 }
 
-// Helper to convert image URL to a File object using a canvas to bypass potential CORS issues.
 const urlToFile = (url: string, filename: string): Promise<File> => {
     return new Promise((resolve, reject) => {
         const image = new Image();
@@ -55,8 +54,6 @@ const WardrobePanel: React.FC<WardrobePanelProps> = ({ onGarmentSelect, activeGa
         if (isLoading || activeGarmentIds.includes(item.id)) return;
         setError(null);
         try {
-            // If the item was from an upload, its URL is a blob URL. We need to fetch it to create a file.
-            // If it was a default item, it's a regular URL. This handles both.
             const file = await urlToFile(item.url, item.name);
             onGarmentSelect(file, item);
         } catch (err) {
@@ -83,41 +80,75 @@ const WardrobePanel: React.FC<WardrobePanelProps> = ({ onGarmentSelect, activeGa
     };
 
   return (
-    <div className="pt-6 sm:pt-8 border-t border-gold-500/30">
-        <h2 className="text-lg sm:text-xl luxury-heading mb-3 sm:mb-4">Atelier Collection</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
-            {wardrobe.map((item) => {
-            const isActive = activeGarmentIds.includes(item.id);
-            return (
-                <button
-                key={item.id}
-                onClick={() => handleGarmentClick(item)}
-                disabled={isLoading || isActive}
-                className="relative aspect-square w-full max-w-[120px] sm:max-w-[140px] border border-yellow-600/30 rounded-lg overflow-hidden transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600 group disabled:opacity-60 disabled:cursor-not-allowed luxury-card-3d hover:border-yellow-600 mx-auto"
-                aria-label={`Select ${item.name}`}
-                >
-                <img src={item.url} alt={item.name} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 backdrop-blur-sm">
-                    <p className="text-white text-xs sm:text-sm font-bold text-center p-1 sm:p-2 tracking-wide">{item.name}</p>
+    <div className="space-y-4">
+      <h2 className="section-title text-xl border-b border-accent-text border-opacity-30 pb-3">
+        Atelier Collection
+      </h2>
+      
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        {wardrobe.map((item) => {
+          const isActive = activeGarmentIds.includes(item.id);
+          return (
+            <button
+              key={item.id}
+              onClick={() => handleGarmentClick(item)}
+              disabled={isLoading || isActive}
+              className="relative aspect-square group image-container disabled:opacity-60 disabled:cursor-not-allowed"
+              aria-label={`Select ${item.name}`}
+            >
+              <img 
+                src={item.url} 
+                alt={item.name} 
+                className="w-full h-full object-cover" 
+              />
+              
+              <div className="absolute inset-0 bg-black bg-opacity-60 flex-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <p className="text-white text-sm font-semibold text-center p-2">
+                  {item.name}
+                </p>
+              </div>
+              
+              {isActive && (
+                <div className="absolute inset-0 bg-accent-text bg-opacity-80 flex-center">
+                  <CheckCircleIcon className="w-8 h-8 text-black" />
                 </div>
-                {isActive && (
-                    <div className="absolute inset-0 bg-yellow-600 bg-opacity-80 flex items-center justify-center backdrop-blur-sm">
-                        <CheckCircleIcon className="w-6 h-6 sm:w-8 sm:h-8 text-black" />
-                    </div>
-                )}
-                </button>
-            );
-            })}
-            <label htmlFor="custom-garment-upload" className={`relative aspect-square border-2 border-dashed border-yellow-600/40 rounded-lg flex flex-col items-center justify-center text-gray-400 transition-colors luxury-card-3d ${isLoading ? 'cursor-not-allowed bg-gray-800/50' : 'hover:border-yellow-600 hover:text-yellow-600 cursor-pointer'}`}>
-                <UploadCloudIcon className="w-5 h-5 sm:w-7 sm:h-7 mb-1 sm:mb-2"/>
-                <span className="text-xs sm:text-sm text-center tracking-wide">Upload</span>
-                <input id="custom-garment-upload" type="file" className="hidden" accept="image/png, image/jpeg, image/webp, image/avif, image/heic, image/heif" onChange={handleFileChange} disabled={isLoading}/>
-            </label>
+              )}
+            </button>
+          );
+        })}
+        
+        <label 
+          htmlFor="custom-garment-upload" 
+          className={`aspect-square border-2 border-dashed border-accent-text border-opacity-40 rounded-lg flex-center flex-col cursor-pointer transition-all ${
+            isLoading ? 'cursor-not-allowed opacity-50' : 'hover:border-accent-text hover:border-opacity-80'
+          }`}
+        >
+          <UploadCloudIcon className="w-7 h-7 mb-2 accent-text"/>
+          <span className="text-sm font-medium">Upload</span>
+          <input 
+            id="custom-garment-upload" 
+            type="file" 
+            className="sr-only" 
+            accept="image/png, image/jpeg, image/webp, image/avif, image/heic, image/heif" 
+            onChange={handleFileChange} 
+            disabled={isLoading}
+          />
+        </label>
+      </div>
+      
+      {wardrobe.length === 0 && (
+        <div className="text-center py-8">
+          <p className="body-text text-sm opacity-75">
+            Your bespoke pieces will appear here.
+          </p>
         </div>
-        {wardrobe.length === 0 && (
-             <p className="text-center text-xs sm:text-sm text-gray-400 mt-4 sm:mt-6 italic">Your bespoke pieces will appear here.</p>
-        )}
-        {error && <p className="text-red-400 text-xs sm:text-sm mt-3 sm:mt-4 p-2 sm:p-3 glass-panel rounded-lg border border-red-400/30">{error}</p>}
+      )}
+      
+      {error && (
+        <div className="glass-card p-4 border-red-500 border">
+          <p className="text-red-400 text-sm">{error}</p>
+        </div>
+      )}
     </div>
   );
 };

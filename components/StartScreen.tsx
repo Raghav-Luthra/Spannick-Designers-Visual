@@ -59,116 +59,138 @@ const StartScreen: React.FC<StartScreenProps> = ({ onModelFinalized }) => {
     setError(null);
   };
 
-
   return (
-    <>
+    <div className="min-h-screen flex items-center justify-center">
       {!userImageUrl ? (
-        <div className="w-full h-full flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-16 animate-fade-in">
-          <div className="lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left luxury-card-3d p-6 lg:p-12 m-0">
-            <div className="max-w-2xl w-full">
-              <div className="flex items-center justify-center lg:justify-start mb-4">
-                <div className="w-3 h-3 bg-yellow-600 rounded-full mr-3"></div>
-                <span className="gold-accent font-semibold tracking-wider uppercase text-xs sm:text-sm">Bespoke Fashion Experience</span>
+        <div className="container">
+          <div className="grid-2 gap-12 lg:gap-16">
+            {/* Left Content */}
+            <div className="flex flex-col justify-center">
+              <div className="mb-4">
+                <div className="flex items-center mb-3">
+                  <div className="w-2 h-2 bg-accent-text rounded-full mr-3"></div>
+                  <span className="accent-text text-sm font-medium uppercase tracking-wider">Luxury Fashion Experience</span>
+                </div>
+                <h1 className="brand-title text-5xl lg:text-7xl mb-6">
+                  SPANNICK
+                  <br />
+                  <span className="text-3xl lg:text-5xl font-normal tracking-widest accent-text">DESIGNERS</span>
+                </h1>
+                <p className="body-text text-lg lg:text-xl mb-8 leading-relaxed">
+                  Where tradition meets innovation. Upload your photograph and witness our atelier's AI craft your personal fashion avatar, ready to showcase our exclusive menswear collection.
+                </p>
+                <div className="w-24 h-0.5 bg-accent-text mb-8"></div>
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl luxury-heading leading-tight mb-6 lg:mb-8">
-                SPANNICK
-                <br />
-                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light tracking-widest gold-accent">DESIGNERS</span>
-              </h1>
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed mb-6 lg:mb-10 font-light">
-                Where tradition meets innovation. Upload your photograph and witness our atelier's AI craft your personal fashion avatar, ready to showcase our exclusive menswear collection with unparalleled sophistication.
-              </p>
-              <div className="w-24 sm:w-32 h-0.5 bg-gradient-to-r from-yellow-600 to-yellow-500 mx-auto lg:mx-0 mb-6 lg:mb-10"></div>
-              <div className="flex flex-col items-center lg:items-start w-full gap-4">
-                <label htmlFor="image-upload-start" className="w-full relative flex items-center justify-center btn-primary text-sm sm:text-base cursor-pointer">
-                  <UploadCloudIcon className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-4" />
-                  BEGIN YOUR TRANSFORMATION
+              
+              <div className="space-y-4">
+                <label htmlFor="image-upload-start" className="btn-primary inline-flex items-center cursor-pointer">
+                  <UploadCloudIcon className="w-5 h-5 mr-3" />
+                  BEGIN TRANSFORMATION
                 </label>
-                <input id="image-upload-start" type="file" className="hidden" accept="image/png, image/jpeg, image/webp, image/avif, image/heic, image/heif" onChange={handleFileChange} />
-                <p className="text-gray-400 text-sm sm:text-base text-center lg:text-left font-light leading-relaxed px-2 lg:px-0">Select a clear, full-body photograph. Portrait compositions are acceptable, though full-body images yield optimal results for our luxury fitting experience.</p>
-                <p className="text-gray-500 text-xs sm:text-sm mt-2 text-center lg:text-left font-light px-2 lg:px-0">By proceeding, you consent to responsible and lawful use of our premium AI styling atelier.</p>
-                {error && <p className="text-red-400 text-sm sm:text-base mt-4 p-3 sm:p-4 glass-panel rounded-lg border border-red-400/30 luxury-glow">{error}</p>}
+                <input 
+                  id="image-upload-start" 
+                  type="file" 
+                  className="sr-only" 
+                  accept="image/png, image/jpeg, image/webp, image/avif, image/heic, image/heif" 
+                  onChange={handleFileChange} 
+                />
+                <p className="body-text text-sm leading-relaxed">
+                  Select a clear, full-body photograph. Portrait compositions are acceptable, though full-body images yield optimal results.
+                </p>
+                <p className="text-xs opacity-75">
+                  By proceeding, you consent to responsible and lawful use of our premium AI styling atelier.
+                </p>
+                {error && (
+                  <div className="glass-card p-4 border-red-500 border">
+                    <p className="text-red-400 text-sm">{error}</p>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
-          <div className="w-full lg:w-1/2 flex flex-col items-center justify-center animate-zoom-in">
-            <Compare
-              firstImage="https://storage.googleapis.com/gemini-95-icons/asr-tryon.jpg"
-              secondImage="https://storage.googleapis.com/gemini-95-icons/asr-tryon-model.png"
-              slideMode="drag"
-              className="w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] aspect-[2/3] rounded-2xl bg-gray-900 border-2 border-yellow-600/30 shadow-lg luxury-card-3d"
-            />
-            <div className="mt-4 sm:mt-6 text-center">
-              <p className="gold-accent font-semibold text-xs sm:text-sm uppercase tracking-wider">Drag to Compare</p>
-              <p className="text-gray-400 text-xs mt-1 sm:mt-2 font-light">Witness the transformation in real-time</p>
+
+            {/* Right Content - Demo */}
+            <div className="flex-center">
+              <div className="text-center">
+                <Compare
+                  firstImage="https://storage.googleapis.com/gemini-95-icons/asr-tryon.jpg"
+                  secondImage="https://storage.googleapis.com/gemini-95-icons/asr-tryon-model.png"
+                  slideMode="drag"
+                  className="w-80 aspect-[2/3] rounded-2xl image-container mx-auto"
+                />
+                <div className="mt-6">
+                  <p className="accent-text font-semibold text-sm uppercase tracking-wider mb-2">Drag to Compare</p>
+                  <p className="body-text text-sm opacity-75">Witness the transformation in real-time</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       ) : (
-        <div className="w-full h-full flex flex-col md:flex-row items-center justify-center gap-6 md:gap-16 animate-slide-up">
-          <div className="md:w-1/2 flex-shrink-0 flex flex-col items-center md:items-start luxury-card-3d p-6 md:p-10 m-0">
-            <div className="text-center md:text-left max-w-lg w-full">
-              <div className="flex items-center justify-center md:justify-start mb-4">
-                <div className="w-2 h-2 bg-yellow-600 rounded-full mr-3"></div>
-                <span className="gold-accent font-semibold tracking-wider uppercase text-xs sm:text-sm">Transformation Complete</span>
+        <div className="container">
+          <div className="grid-2 gap-12">
+            {/* Left Content */}
+            <div className="flex flex-col justify-center">
+              <div className="mb-6">
+                <div className="flex items-center mb-3">
+                  <div className="w-2 h-2 bg-accent-text rounded-full mr-3"></div>
+                  <span className="accent-text text-sm font-medium uppercase tracking-wider">Transformation Complete</span>
+                </div>
+                <h1 className="brand-title text-4xl lg:text-6xl mb-4">
+                  Your Bespoke
+                  <br />
+                  <span className="text-2xl lg:text-4xl font-normal tracking-wider accent-text">AVATAR</span>
+                </h1>
+                <p className="body-text text-lg leading-relaxed">
+                  Witness your metamorphosis. Drag the slider to reveal your sophisticated digital persona, meticulously crafted for the finest menswear experience.
+                </p>
               </div>
-              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl luxury-heading leading-tight mb-4 sm:mb-6">
-                Your Bespoke
-                <br />
-                <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light tracking-wider gold-accent">AVATAR</span>
-              </h1>
-              <p className="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed font-light px-2 md:px-0">
-                Witness your metamorphosis. Drag the slider to reveal your sophisticated digital persona, meticulously crafted for the finest menswear experience.
-              </p>
-            </div>
-            
-            {isGenerating && (
-              <div className="flex items-center gap-3 sm:gap-4 text-sm sm:text-base lg:text-lg gold-accent mt-6 sm:mt-10 glass-panel p-4 sm:p-6 rounded-lg luxury-glow">
-                <Spinner />
-                <span>Crafting your bespoke avatar...</span>
-              </div>
-            )}
+              
+              {isGenerating && (
+                <div className="glass-card p-6 mb-6">
+                  <div className="flex items-center gap-4">
+                    <Spinner />
+                    <span className="accent-text font-medium">Crafting your bespoke avatar...</span>
+                  </div>
+                </div>
+              )}
 
-            {error && 
-              <div className="text-center md:text-left text-red-400 max-w-md mt-6 sm:mt-10 glass-panel p-4 sm:p-6 rounded-lg border border-red-400/30 luxury-glow">
-                <p className="font-bold text-base sm:text-lg mb-2 sm:mb-3">Transformation Interrupted</p>
-                <p className="text-sm sm:text-base mb-3 sm:mb-4">{error}</p>
-                <button onClick={reset} className="text-sm sm:text-base font-semibold gold-accent hover:text-yellow-400 transition-colors">Retry Transformation</button>
-              </div>
-            }
-            
+              {error && (
+                <div className="glass-card p-6 border-red-500 border mb-6">
+                  <h3 className="font-semibold text-lg mb-2 text-red-400">Transformation Interrupted</h3>
+                  <p className="body-text mb-4">{error}</p>
+                  <button onClick={reset} className="btn-ghost">
+                    Retry Transformation
+                  </button>
+                </div>
+              )}
+              
               {generatedModelUrl && !isGenerating && !error && (
-                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-6 sm:mt-10 animate-fade-in w-full">
-                  <button 
-                    onClick={reset}
-                    className="w-full sm:w-auto btn-secondary text-sm sm:text-base cursor-pointer"
-                  >
+                <div className="flex gap-4">
+                  <button onClick={reset} className="btn-secondary">
                     SELECT DIFFERENT IMAGE
                   </button>
-                  <button 
-                    onClick={() => onModelFinalized(generatedModelUrl)}
-                    className="w-full sm:w-auto btn-primary text-sm sm:text-base cursor-pointer"
-                  >
+                  <button onClick={() => onModelFinalized(generatedModelUrl)} className="btn-primary">
                     ENTER ATELIER →
                   </button>
                 </div>
               )}
-          </div>
-          <div className="md:w-1/2 w-full flex items-center justify-center">
-            <div 
-              className={`relative rounded-2xl transition-all duration-300 ease-in-out luxury-card-3d ${isGenerating ? 'border-2 border-yellow-500' : 'border-2 border-yellow-600/30'} max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] mx-auto`}
-            >
-              <Compare
-                firstImage={userImageUrl}
-                secondImage={generatedModelUrl ?? userImageUrl}
-                slideMode="drag"
-                className="w-[200px] h-[300px] sm:w-[240px] sm:h-[360px] md:w-[280px] md:h-[420px] lg:w-[320px] lg:h-[480px] rounded-2xl bg-gray-900 shadow-lg"
-              />
+            </div>
+
+            {/* Right Content - Comparison */}
+            <div className="flex-center">
+              <div className={`image-container transition-all duration-300 ${isGenerating ? 'border-accent-text' : ''}`}>
+                <Compare
+                  firstImage={userImageUrl}
+                  secondImage={generatedModelUrl ?? userImageUrl}
+                  slideMode="drag"
+                  className="w-80 aspect-[2/3] rounded-2xl"
+                />
+              </div>
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -8,11 +8,12 @@ import StartScreen from './components/StartScreen';
 import Canvas from './components/Canvas';
 import WardrobePanel from './components/WardrobeModal';
 import OutfitStack from './components/OutfitStack';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import { generateVirtualTryOnImage, generatePoseVariation } from './services/geminiService';
 import { OutfitLayer, WardrobeItem } from './types';
 import { ChevronDownIcon, ChevronUpIcon } from './components/icons';
 import { defaultWardrobe } from './wardrobe';
-import Footer from './components/Footer';
 import { getFriendlyErrorMessage } from '@/lib/utils';
 import Spinner from './components/Spinner';
 
@@ -32,23 +33,19 @@ const useMediaQuery = (query: string): boolean => {
     const mediaQueryList = window.matchMedia(query);
     const listener = (event: MediaQueryListEvent) => setMatches(event.matches);
 
-    // DEPRECATED: mediaQueryList.addListener(listener);
     mediaQueryList.addEventListener('change', listener);
     
-    // Check again on mount in case it changed between initial state and effect runs
     if (mediaQueryList.matches !== matches) {
       setMatches(mediaQueryList.matches);
     }
 
     return () => {
-      // DEPRECATED: mediaQueryList.removeListener(listener);
       mediaQueryList.removeEventListener('change', listener);
     };
   }, [query, matches]);
 
   return matches;
 };
-
 
 const App: React.FC = () => {
   const [modelImageUrl, setModelImageUrl] = useState<string | null>(null);
@@ -78,8 +75,6 @@ const App: React.FC = () => {
     if (!currentLayer) return modelImageUrl;
 
     const poseInstruction = POSE_INSTRUCTIONS[currentPoseIndex];
-    // Return the image for the current pose, or fallback to the first available image for the current layer.
-    // This ensures an image is shown even while a new pose is generating.
     return currentLayer.poseImages[poseInstruction] ?? Object.values(currentLayer.poseImages)[0];
   }, [outfitHistory, currentOutfitIndex, currentPoseIndex, modelImageUrl]);
 
@@ -113,11 +108,10 @@ const App: React.FC = () => {
   const handleGarmentSelect = useCallback(async (garmentFile: File, garmentInfo: WardrobeItem) => {
     if (!displayImageUrl || isLoading) return;
 
-    // Caching: Check if we are re-applying a previously generated layer
     const nextLayer = outfitHistory[currentOutfitIndex + 1];
     if (nextLayer && nextLayer.garment?.id === garmentInfo.id) {
         setCurrentOutfitIndex(prev => prev + 1);
-        setCurrentPoseIndex(0); // Reset pose when changing layer
+        setCurrentPoseIndex(0);
         return;
     }
 
@@ -135,13 +129,11 @@ const App: React.FC = () => {
       };
 
       setOutfitHistory(prevHistory => {
-        // Cut the history at the current point before adding the new layer
         const newHistory = prevHistory.slice(0, currentOutfitIndex + 1);
         return [...newHistory, newLayer];
       });
       setCurrentOutfitIndex(prev => prev + 1);
       
-      // Add to personal wardrobe if it's not already there
       setWardrobe(prev => {
         if (prev.find(item => item.id === garmentInfo.id)) {
             return prev;
@@ -159,7 +151,7 @@ const App: React.FC = () => {
   const handleRemoveLastGarment = () => {
     if (currentOutfitIndex > 0) {
       setCurrentOutfitIndex(prevIndex => prevIndex - 1);
-      setCurrentPoseIndex(0); // Reset pose to default when removing a layer
+      setCurrentPoseIndex(0);
     }
   };
   
@@ -169,23 +161,19 @@ const App: React.FC = () => {
     const poseInstruction = POSE_INSTRUCTIONS[newIndex];
     const currentLayer = outfitHistory[currentOutfitIndex];
 
-    // If pose already exists, just update the index to show it.
     if (currentLayer.poseImages[poseInstruction]) {
       setCurrentPoseIndex(newIndex);
       return;
     }
 
-    // Pose doesn't exist, so generate it.
-    // Use an existing image from the current layer as the base.
     const baseImageForPoseChange = Object.values(currentLayer.poseImages)[0];
-    if (!baseImageForPoseChange) return; // Should not happen
+    if (!baseImageForPoseChange) return;
 
     setError(null);
     setIsLoading(true);
     setLoadingMessage(`Changing pose...`);
     
     const prevPoseIndex = currentPoseIndex;
-    // Optimistically update the pose index so the pose name changes in the UI
     setCurrentPoseIndex(newIndex);
 
     try {
@@ -198,7 +186,6 @@ const App: React.FC = () => {
       });
     } catch (err) {
       setError(getFriendlyErrorMessage(err, 'Failed to change pose'));
-      // Revert pose index on failure
       setCurrentPoseIndex(prevPoseIndex);
     } finally {
       setIsLoading(false);
@@ -206,69 +193,86 @@ const App: React.FC = () => {
     }
   }, [currentPoseIndex, outfitHistory, isLoading, currentOutfitIndex]);
 
-
   return (
-    <div className="font-sans">
-        {!modelImageUrl ? (
-          <div className="w-screen min-h-screen flex items-start sm:items-center justify-center pb-16 sm:pb-20">
+    <div className="min-h-screen">
+      {!modelImageUrl ? (
+        <>
+          <Header />
+          <main className="pt-20">
             <StartScreen onModelFinalized={handleModelFinalized} />
-          </div>
-        ) : (
-          <div className="relative flex flex-col h-screen overflow-hidden">
-            <main className="flex-grow relative flex flex-col md:flex-row overflow-hidden">
-              <div className="w-full h-full flex-grow flex items-center justify-center pb-12 sm:pb-16 relative">
-                <Canvas 
-                  displayImageUrl={displayImageUrl}
-                  onStartOver={handleStartOver}
+          </main>
+        </>
+      ) : (
+        <div className="flex flex-col h-screen">
+          <main className="flex-1 flex flex-col md:flex-row overflow-hidden">
+            {/* Canvas Area */}
+            <div className="flex-1 relative">
+              <Canvas 
+                displayImageUrl={displayImageUrl}
+                onStartOver={handleStartOver}
+                isLoading={isLoading}
+                loadingMessage={loadingMessage}
+                onSelectPose={handlePoseSelect}
+                poseInstructions={POSE_INSTRUCTIONS}
+                currentPoseIndex={currentPoseIndex}
+                availablePoseKeys={availablePoseKeys}
+              />
+            </div>
+
+            {/* Sidebar */}
+            <aside 
+              className={`absolute md:relative bottom-0 right-0 w-full md:w-80 glass-card border-t md:border-t-0 md:border-l border-opacity-20 transition-transform duration-300 ${
+                isSheetCollapsed ? 'translate-y-[calc(100%-3rem)]' : 'translate-y-0'
+              } md:translate-y-0`}
+            >
+              {/* Mobile Toggle */}
+              <button 
+                onClick={() => setIsSheetCollapsed(!isSheetCollapsed)} 
+                className="md:hidden w-full h-12 flex-center glass-card border-b border-opacity-20"
+                aria-label={isSheetCollapsed ? 'Expand panel' : 'Collapse panel'}
+              >
+                {isSheetCollapsed ? 
+                  <ChevronUpIcon className="w-6 h-6" /> : 
+                  <ChevronDownIcon className="w-6 h-6" />
+                }
+              </button>
+
+              {/* Sidebar Content */}
+              <div className="p-6 pb-20 overflow-y-auto h-full space-y-8">
+                {error && (
+                  <div className="glass-card p-4 border-red-500 border" role="alert">
+                    <p className="font-semibold text-red-400 mb-1">Error</p>
+                    <p className="text-sm text-red-300">{error}</p>
+                  </div>
+                )}
+                
+                <OutfitStack 
+                  outfitHistory={activeOutfitLayers}
+                  onRemoveLastGarment={handleRemoveLastGarment}
+                />
+                
+                <WardrobePanel
+                  onGarmentSelect={handleGarmentSelect}
+                  activeGarmentIds={activeGarmentIds}
                   isLoading={isLoading}
-                  loadingMessage={loadingMessage}
-                  onSelectPose={handlePoseSelect}
-                  poseInstructions={POSE_INSTRUCTIONS}
-                  currentPoseIndex={currentPoseIndex}
-                  availablePoseKeys={availablePoseKeys}
+                  wardrobe={wardrobe}
                 />
               </div>
+            </aside>
+          </main>
 
-              <aside 
-                className={`absolute md:relative md:flex-shrink-0 bottom-0 right-0 h-auto md:h-full w-full md:w-80 md:max-w-xs glass-panel flex flex-col border-t md:border-t-0 md:border-l border-gray-200 transition-transform duration-300 ease-in-out ${isSheetCollapsed ? 'translate-y-[calc(100%-3.5rem)]' : 'translate-y-0'} md:translate-y-0`}
-              >
-                  <button 
-                    onClick={() => setIsSheetCollapsed(!isSheetCollapsed)} 
-                    className="md:hidden w-full h-8 sm:h-10 flex items-center justify-center bg-white border-b border-gray-200"
-                    aria-label={isSheetCollapsed ? 'Expand panel' : 'Collapse panel'}
-                  >
-                    {isSheetCollapsed ? <ChevronUpIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" /> : <ChevronDownIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" />}
-                  </button>
-                  <div className="p-4 md:p-6 pb-16 sm:pb-20 overflow-y-auto flex-grow flex flex-col gap-6 sm:gap-8">
-                    {error && (
-                      <div className="glass-panel border-l-4 border-red-400 text-red-400 p-4 mb-4 rounded-lg" role="alert">
-                        <p className="font-bold text-sm sm:text-base">Error</p>
-                        <p className="text-xs sm:text-sm">{error}</p>
-                      </div>
-                    )}
-                    <OutfitStack 
-                      outfitHistory={activeOutfitLayers}
-                      onRemoveLastGarment={handleRemoveLastGarment}
-                    />
-                    <WardrobePanel
-                      onGarmentSelect={handleGarmentSelect}
-                      activeGarmentIds={activeGarmentIds}
-                      isLoading={isLoading}
-                      wardrobe={wardrobe}
-                    />
-                  </div>
-              </aside>
-            </main>
-              {isLoading && isMobile && (
-                <div className="fixed inset-0 glass-panel backdrop-blur-sm flex flex-col items-center justify-center z-50">
-                  <Spinner />
-                  {loadingMessage && (
-                    <p className="text-base sm:text-lg gold-accent mt-4 sm:mt-6 text-center px-3 sm:px-4">{loadingMessage}</p>
-                  )}
-                </div>
+          {/* Mobile Loading Overlay */}
+          {isLoading && isMobile && (
+            <div className="fixed inset-0 glass-card flex-center flex-col z-50">
+              <Spinner />
+              {loadingMessage && (
+                <p className="accent-text mt-4 text-center font-medium">{loadingMessage}</p>
               )}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
+      )}
+      
       <Footer isOnDressingScreen={!!modelImageUrl} />
     </div>
   );

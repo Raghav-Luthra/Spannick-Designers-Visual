@@ -23,25 +23,27 @@ const Footer: React.FC<FooterProps> = ({ isOnDressingScreen = false }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setSuggestionIndex((prevIndex) => (prevIndex + 1) % REMIX_SUGGESTIONS.length);
-    }, 4000); // Change suggestion every 4 seconds
+    }, 4000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <footer className={`fixed bottom-0 left-0 right-0 glass-panel border-t border-gray-200 p-2 sm:p-4 z-50 ${isOnDressingScreen ? 'hidden sm:block' : ''}`}>
-      <div className="mx-auto flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm text-platinum-300 max-w-7xl px-2 sm:px-4">
-        <div className="flex items-center space-x-2">
-          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-yellow-600 rounded-full"></div>
-          <p className="font-serif text-gold-400">
-            <span className="hidden sm:inline">Spannick Designers © 1994 - Luxury Menswear Atelier</span>
-            <span className="sm:hidden">Spannick Designers © 1994</span>
-          </p>
-        </div>
-        <div className="h-3 sm:h-4 mt-1 sm:mt-0 flex items-center overflow-hidden">
-              <p className="text-center sm:text-right italic gold-accent fade-in text-xs sm:text-sm">
-                {REMIX_SUGGESTIONS[suggestionIndex]}
-              </p>
+    <footer className={`fixed bottom-0 left-0 right-0 glass-card border-t border-opacity-20 z-50 ${isOnDressingScreen ? 'hidden sm:block' : ''}`}>
+      <div className="container">
+        <div className="flex flex-col sm:flex-row items-center justify-between py-3 text-sm">
+          <div className="flex items-center gap-2 mb-2 sm:mb-0">
+            <div className="w-2 h-2 bg-accent-text rounded-full"></div>
+            <p className="accent-text font-medium">
+              <span className="hidden sm:inline">Spannick Designers © 1994 - Luxury Menswear Atelier</span>
+              <span className="sm:hidden">Spannick Designers © 1994</span>
+            </p>
+          </div>
+          <div className="text-center sm:text-right">
+            <p className="body-text text-xs italic opacity-75 fade-in">
+              {REMIX_SUGGESTIONS[suggestionIndex]}
+            </p>
+          </div>
         </div>
       </div>
     </footer>
