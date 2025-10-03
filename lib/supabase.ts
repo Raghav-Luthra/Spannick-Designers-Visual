@@ -20,7 +20,7 @@ export const getApiKey = async (serviceName: string): Promise<string> => {
     .from('api_keys')
     .select('api_key')
     .eq('service_name', serviceName)
-    .single();
+    .maybeSingle();
 
   if (error) {
     throw new Error(`Failed to retrieve ${serviceName} API key: ${error.message}`);
