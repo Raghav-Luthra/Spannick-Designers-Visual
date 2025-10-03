@@ -49,17 +49,7 @@ Deno.serve(async (req: Request) => {
     switch (body.action) {
       case 'generateModel':
         if (!body.userImage) throw new Error('userImage is required');
-        prompt = `You are an expert at image editing and manipulation. Your task is to take this photo of a person and transform it into a professional full-body fashion model photograph while PRESERVING THEIR EXACT IDENTITY.
-
-**CRITICAL REQUIREMENTS:**
-1. **PRESERVE IDENTITY:** The person's face, facial features, skin tone, hair color, hair style, eye color, and ALL unique characteristics MUST remain EXACTLY the same. Do NOT change or idealize their appearance.
-2. **Full Body Pose:** Create a full-body shot in a natural, relaxed standing pose suitable for fashion modeling (straight posture, arms at sides or one hand in pocket).
-3. **Professional Setting:** Place them against a clean, neutral studio backdrop (light gray, #f0f0f0 or similar).
-4. **Natural Expression:** Give them a neutral, calm, professional model expression.
-5. **Realistic Quality:** The final image must be photorealistic with proper lighting, shadows, and proportions.
-6. **Body Type:** Preserve their natural body type and proportions.
-
-**OUTPUT:** Return ONLY the final edited photograph. No text, no variations, just the single image.`;
+        prompt = "Take this person and create a professional full-body fashion photograph of them. Keep their exact face, hair, body type, skin tone, and all unique features completely unchanged. Position them in a natural standing model pose against a clean light gray studio background. The lighting should be soft and professional, like a high-end fashion photoshoot. Make it look like a real photograph taken in a professional studio.";
         parts = [
           { inline_data: { mime_type: body.userImage.split(';')[0].split(':')[1], data: body.userImage.split(',')[1] } },
           { text: prompt }
@@ -68,39 +58,7 @@ Deno.serve(async (req: Request) => {
 
       case 'generateTryOn':
         if (!body.modelImage || !body.garmentImage) throw new Error('modelImage and garmentImage are required');
-        prompt = `You are an expert at virtual try-on image editing. You will receive TWO images:
-1. A MODEL IMAGE showing a person
-2. A GARMENT IMAGE showing clothing
-
-Your task is to create a photorealistic image of the person wearing the garment.
-
-**CRITICAL REQUIREMENTS:**
-
-**IDENTITY & APPEARANCE:**
-- The person's face, hair, skin tone, body shape, and ALL physical features from the MODEL IMAGE must remain EXACTLY the same
-- Do NOT alter or idealize their appearance in any way
-
-**GARMENT APPLICATION:**
-- COMPLETELY REMOVE all clothing from the MODEL IMAGE that conflicts with the new garment
-- Place the EXACT garment from the GARMENT IMAGE onto the person
-- Match the garment's color, pattern, texture, fabric type, and design PRECISELY
-- If it's a shirt/top: remove only the upper body clothing, keep pants/lower body as is
-- If it's pants/bottom: remove only the lower body clothing, keep shirt/upper body as is
-- If it's a full outfit/dress: replace all clothing
-- The garment should fit naturally with realistic folds, wrinkles, and shadows based on the person's pose
-
-**POSE & BACKGROUND:**
-- Keep the EXACT same pose and body position from the MODEL IMAGE
-- Preserve the EXACT same background from the MODEL IMAGE
-- Maintain the same lighting and shadows as the original scene
-
-**REALISM:**
-- The final result must look like a real photograph, not a composite
-- Natural fabric draping and movement
-- Consistent lighting across the entire image
-- Proper shadows and highlights on the garment
-
-**OUTPUT:** Return ONLY the final edited photograph. No text, no variations, just the single image.`;
+        prompt = "Edit this person's photograph by replacing their current clothing with the garment shown in the second image. Keep the person's face, hair, pose, and background exactly as they are. Remove their current clothing completely and dress them in the new garment, matching its exact colors, patterns, and style. Make sure the garment fits naturally on their body with realistic fabric folds and shadows that match the original lighting. The result should look like they were originally photographed wearing this outfit.";
         parts = [
           { inline_data: { mime_type: body.modelImage.split(';')[0].split(':')[1], data: body.modelImage.split(',')[1] } },
           { inline_data: { mime_type: body.garmentImage.split(';')[0].split(':')[1], data: body.garmentImage.split(',')[1] } },
@@ -110,16 +68,7 @@ Your task is to create a photorealistic image of the person wearing the garment.
 
       case 'generatePose':
         if (!body.tryOnImage || !body.poseInstruction) throw new Error('tryOnImage and poseInstruction are required');
-        prompt = `You are an expert fashion photographer and image editor. Take this fashion photograph and create a new version from a different angle or perspective.
-
-**CRITICAL REQUIREMENTS:**
-1. **PRESERVE IDENTITY:** The person's face, features, hair, skin tone, and appearance must remain EXACTLY the same
-2. **PRESERVE CLOTHING:** The clothing, its color, pattern, style, and fit must remain EXACTLY the same
-3. **PRESERVE BACKGROUND:** Keep the same style and color of background
-4. **NEW PERSPECTIVE:** Change the viewing angle to: "${body.poseInstruction}"
-5. **REALISM:** The result must look like a real photograph taken from a different angle
-
-**OUTPUT:** Return ONLY the final photograph. No text, no variations, just the single image.`;
+        prompt = `Take this fashion photograph and recreate it from ${body.poseInstruction}. Keep the person, their clothing, and the background style exactly the same, just change the camera angle or perspective. Make it look like a real photograph taken from this new viewpoint.`;
         parts = [
           { inline_data: { mime_type: body.tryOnImage.split(';')[0].split(':')[1], data: body.tryOnImage.split(',')[1] } },
           { text: prompt }
@@ -131,15 +80,14 @@ Your task is to create a photorealistic image of the person wearing the garment.
     }
 
     const geminiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts }],
           generationConfig: {
-            response_modalities: ['image', 'text'],
-            temperature: 0.4
+            response_modalities: ['image']
           }
         })
       }
