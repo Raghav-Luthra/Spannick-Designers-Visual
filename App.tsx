@@ -205,9 +205,9 @@ const App: React.FC = () => {
         </>
       ) : (
         <div className="flex flex-col h-screen">
-          <main className="flex-1 flex flex-col md:flex-row overflow-hidden">
+          <main className="flex-1 flex flex-col md:flex-row overflow-hidden relative">
             {/* Canvas Area */}
-            <div className="flex-1 relative pb-16 md:pb-0">
+            <div className="flex-1 relative overflow-hidden">
               <Canvas
                 displayImageUrl={displayImageUrl}
                 onStartOver={handleStartOver}
@@ -220,37 +220,41 @@ const App: React.FC = () => {
               />
             </div>
 
-            {/* Sidebar */}
+            {/* Sidebar - Mobile Bottom Sheet / Desktop Sidebar */}
             <aside
-              className={`absolute md:relative bottom-0 right-0 w-full md:w-80 glass-card border-t md:border-t-0 md:border-l border-opacity-20 transition-all duration-300 z-10 ${
-                isSheetCollapsed ? 'h-14' : 'h-[70vh]'
-              } md:h-auto md:translate-y-0`}
+              className={`fixed md:relative bottom-0 left-0 right-0 md:w-80 glass-card border-t md:border-t-0 md:border-l border-opacity-20 transition-all duration-300 ease-out z-20 md:h-auto ${
+                isSheetCollapsed ? 'translate-y-[calc(100%-3.5rem)]' : 'translate-y-0'
+              } md:translate-y-0`}
+              style={{
+                maxHeight: isMobile ? (isSheetCollapsed ? '3.5rem' : '75vh') : 'none'
+              }}
             >
               {/* Mobile Toggle */}
               <button
                 onClick={() => setIsSheetCollapsed(!isSheetCollapsed)}
-                className="md:hidden w-full h-14 flex-center glass-card border-b border-opacity-20"
-                aria-label={isSheetCollapsed ? 'Expand panel' : 'Collapse panel'}
+                className="md:hidden w-full h-14 flex-center glass-card relative"
+                aria-label={isSheetCollapsed ? 'Expand collection' : 'Collapse collection'}
               >
-                <div className="flex items-center gap-2">
+                <div className="absolute top-2 w-12 h-1 bg-white bg-opacity-30 rounded-full" />
+                <div className="flex items-center gap-2 mt-2">
                   {isSheetCollapsed ? (
                     <>
                       <ChevronUpIcon className="w-5 h-5" />
-                      <span className="text-sm font-medium">View Collection</span>
+                      <span className="text-sm font-semibold">View Collection</span>
                     </>
                   ) : (
                     <>
                       <ChevronDownIcon className="w-5 h-5" />
-                      <span className="text-sm font-medium">Hide Collection</span>
+                      <span className="text-sm font-semibold">Hide</span>
                     </>
                   )}
                 </div>
               </button>
 
               {/* Sidebar Content */}
-              <div className={`p-4 md:p-6 pb-6 md:pb-20 overflow-y-auto space-y-6 md:space-y-8 ${
-                isSheetCollapsed ? 'hidden' : 'h-[calc(70vh-3.5rem)]'
-              } md:block md:h-full`}>
+              <div className={`overflow-y-auto space-y-6 md:space-y-8 ${
+                isSheetCollapsed ? 'h-0' : 'h-[calc(75vh-3.5rem)] p-4'
+              } md:h-full md:p-6 md:pb-20`}>
                 {error && (
                   <div className="glass-card p-4 border-red-500 border" role="alert">
                     <p className="font-semibold text-red-400 mb-1">Error</p>
@@ -275,10 +279,10 @@ const App: React.FC = () => {
 
           {/* Mobile Loading Overlay */}
           {isLoading && isMobile && (
-            <div className="fixed inset-0 glass-card flex-center flex-col z-50">
+            <div className="fixed inset-0 glass-card flex-center flex-col z-50 px-4">
               <Spinner />
               {loadingMessage && (
-                <p className="accent-text mt-4 text-center font-medium">{loadingMessage}</p>
+                <p className="accent-text mt-4 text-center font-medium text-sm">{loadingMessage}</p>
               )}
             </div>
           )}
