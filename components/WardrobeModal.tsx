@@ -80,12 +80,12 @@ const WardrobePanel: React.FC<WardrobePanelProps> = ({ onGarmentSelect, activeGa
     };
 
   return (
-    <div className="space-y-4">
-      <h2 className="section-title text-xl border-b border-accent-text border-opacity-30 pb-3">
+    <div className="space-y-3 md:space-y-4">
+      <h2 className="section-title text-lg md:text-xl border-b border-accent-text border-opacity-30 pb-2 md:pb-3">
         Atelier Collection
       </h2>
-      
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+
+      <div className="grid grid-cols-2 gap-2 md:gap-3">
         {wardrobe.map((item) => {
           const isActive = activeGarmentIds.includes(item.id);
           return (
@@ -103,28 +103,28 @@ const WardrobePanel: React.FC<WardrobePanelProps> = ({ onGarmentSelect, activeGa
               />
               
               <div className="absolute inset-0 bg-black bg-opacity-60 flex-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <p className="text-white text-sm font-semibold text-center p-2">
+                <p className="text-white text-xs md:text-sm font-semibold text-center p-1.5 md:p-2">
                   {item.name}
                 </p>
               </div>
               
               {isActive && (
                 <div className="absolute inset-0 bg-accent-text bg-opacity-80 flex-center">
-                  <CheckCircleIcon className="w-8 h-8 text-black" />
+                  <CheckCircleIcon className="w-6 h-6 md:w-8 md:h-8 text-black" />
                 </div>
               )}
             </button>
           );
         })}
         
-        <label 
-          htmlFor="custom-garment-upload" 
+        <label
+          htmlFor="custom-garment-upload"
           className={`aspect-square border-2 border-dashed border-accent-text border-opacity-40 rounded-lg flex-center flex-col cursor-pointer transition-all ${
             isLoading ? 'cursor-not-allowed opacity-50' : 'hover:border-accent-text hover:border-opacity-80'
           }`}
         >
-          <UploadCloudIcon className="w-7 h-7 mb-2 accent-text"/>
-          <span className="text-sm font-medium">Upload</span>
+          <UploadCloudIcon className="w-6 h-6 md:w-7 md:h-7 mb-1 md:mb-2 accent-text"/>
+          <span className="text-xs md:text-sm font-medium">Upload</span>
           <input 
             id="custom-garment-upload" 
             type="file" 
@@ -137,16 +137,16 @@ const WardrobePanel: React.FC<WardrobePanelProps> = ({ onGarmentSelect, activeGa
       </div>
       
       {wardrobe.length === 0 && (
-        <div className="text-center py-8">
-          <p className="body-text text-sm opacity-75">
+        <div className="text-center py-4 md:py-8">
+          <p className="body-text text-xs md:text-sm opacity-75">
             Your bespoke pieces will appear here.
           </p>
         </div>
       )}
-      
+
       {error && (
-        <div className="glass-card p-4 border-red-500 border">
-          <p className="text-red-400 text-sm">{error}</p>
+        <div className="glass-card p-3 md:p-4 border-red-500 border">
+          <p className="text-red-400 text-xs md:text-sm">{error}</p>
         </div>
       )}
     </div>

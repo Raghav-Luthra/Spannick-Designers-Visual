@@ -206,8 +206,8 @@ const App: React.FC = () => {
         <div className="flex flex-col h-screen">
           <main className="flex-1 flex flex-col md:flex-row overflow-hidden">
             {/* Canvas Area */}
-            <div className="flex-1 relative">
-              <Canvas 
+            <div className="flex-1 relative pb-16 md:pb-0">
+              <Canvas
                 displayImageUrl={displayImageUrl}
                 onStartOver={handleStartOver}
                 isLoading={isLoading}
@@ -220,37 +220,37 @@ const App: React.FC = () => {
             </div>
 
             {/* Sidebar */}
-            <aside 
-              className={`absolute md:relative bottom-0 right-0 w-full md:w-80 glass-card border-t md:border-t-0 md:border-l border-opacity-20 transition-transform duration-300 ${
+            <aside
+              className={`absolute md:relative bottom-0 right-0 w-full md:w-80 glass-card border-t md:border-t-0 md:border-l border-opacity-20 transition-transform duration-300 z-10 ${
                 isSheetCollapsed ? 'translate-y-[calc(100%-3rem)]' : 'translate-y-0'
-              } md:translate-y-0`}
+              } md:translate-y-0 max-h-[60vh] md:max-h-none`}
             >
               {/* Mobile Toggle */}
-              <button 
-                onClick={() => setIsSheetCollapsed(!isSheetCollapsed)} 
+              <button
+                onClick={() => setIsSheetCollapsed(!isSheetCollapsed)}
                 className="md:hidden w-full h-12 flex-center glass-card border-b border-opacity-20"
                 aria-label={isSheetCollapsed ? 'Expand panel' : 'Collapse panel'}
               >
-                {isSheetCollapsed ? 
-                  <ChevronUpIcon className="w-6 h-6" /> : 
+                {isSheetCollapsed ?
+                  <ChevronUpIcon className="w-6 h-6" /> :
                   <ChevronDownIcon className="w-6 h-6" />
                 }
               </button>
 
               {/* Sidebar Content */}
-              <div className="p-6 pb-20 overflow-y-auto h-full space-y-8">
+              <div className="p-4 md:p-6 pb-6 md:pb-20 overflow-y-auto h-[calc(60vh-3rem)] md:h-full space-y-6 md:space-y-8">
                 {error && (
                   <div className="glass-card p-4 border-red-500 border" role="alert">
                     <p className="font-semibold text-red-400 mb-1">Error</p>
                     <p className="text-sm text-red-300">{error}</p>
                   </div>
                 )}
-                
-                <OutfitStack 
+
+                <OutfitStack
                   outfitHistory={activeOutfitLayers}
                   onRemoveLastGarment={handleRemoveLastGarment}
                 />
-                
+
                 <WardrobePanel
                   onGarmentSelect={handleGarmentSelect}
                   activeGarmentIds={activeGarmentIds}
