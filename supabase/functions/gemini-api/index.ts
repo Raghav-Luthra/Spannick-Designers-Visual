@@ -49,7 +49,7 @@ Deno.serve(async (req: Request) => {
     switch (body.action) {
       case 'generateModel':
         if (!body.userImage) throw new Error('userImage is required');
-        prompt = "Take this person and create a professional full-body fashion photograph of them. Keep their exact face, hair, body type, skin tone, and all unique features completely unchanged. Position them in a natural standing model pose against a clean light gray studio background. The lighting should be soft and professional, like a high-end fashion photoshoot. Make it look like a real photograph taken in a professional studio.";
+        prompt = "You are an expert fashion photographer AI. Transform the person in this image into a full-body fashion model photo suitable for an e-commerce website. The background must be a clean, neutral studio backdrop (light gray, #f0f0f0). The person should have a neutral, professional model expression. Preserve the person's identity, unique features, and body type, but place them in a standard, relaxed standing model pose. The final image must be photorealistic. Return ONLY the final image.";
         parts = [
           { inline_data: { mime_type: body.userImage.split(';')[0].split(':')[1], data: body.userImage.split(',')[1] } },
           { text: prompt }
@@ -58,7 +58,7 @@ Deno.serve(async (req: Request) => {
 
       case 'generateTryOn':
         if (!body.modelImage || !body.garmentImage) throw new Error('modelImage and garmentImage are required');
-        prompt = "Edit this person's photograph by replacing their current clothing with the garment shown in the second image. Keep the person's face, hair, pose, and background exactly as they are. Remove their current clothing completely and dress them in the new garment, matching its exact colors, patterns, and style. Make sure the garment fits naturally on their body with realistic fabric folds and shadows that match the original lighting. The result should look like they were originally photographed wearing this outfit.";
+        prompt = "You are an expert virtual try-on AI. You will be given a 'model image' and a 'garment image'. Your task is to create a new photorealistic image where the person from the 'model image' is wearing the clothing from the 'garment image'. **Crucial Rules:** 1.  **Complete Garment Replacement:** You MUST completely REMOVE and REPLACE the clothing item worn by the person in the 'model image' with the new garment. No part of the original clothing (e.g., collars, sleeves, patterns) should be visible in the final image. 2.  **Preserve the Model:** The person's face, hair, body shape, and pose from the 'model image' MUST remain unchanged. 3.  **Preserve the Background:** The entire background from the 'model image' MUST be preserved perfectly. 4.  **Apply the Garment:** Realistically fit the new garment onto the person. It should adapt to their pose with natural folds, shadows, and lighting consistent with the original scene. 5.  **Output:** Return ONLY the final, edited image. Do not include any text.";
         parts = [
           { inline_data: { mime_type: body.modelImage.split(';')[0].split(':')[1], data: body.modelImage.split(',')[1] } },
           { inline_data: { mime_type: body.garmentImage.split(';')[0].split(':')[1], data: body.garmentImage.split(',')[1] } },
