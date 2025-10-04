@@ -55,9 +55,9 @@ const App: React.FC = () => {
   const [loadingMessage, setLoadingMessage] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [currentPoseIndex, setCurrentPoseIndex] = useState(0);
+  const isMobile = useMediaQuery('(max-width: 767px)');
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
   const [wardrobe, setWardrobe] = useState<WardrobeItem[]>(defaultWardrobe);
-  const isMobile = useMediaQuery('(max-width: 767px)');
 
   const activeOutfitLayers = useMemo(() => 
     outfitHistory.slice(0, currentOutfitIndex + 1), 
@@ -91,6 +91,7 @@ const App: React.FC = () => {
       poseImages: { [POSE_INSTRUCTIONS[0]]: url }
     }]);
     setCurrentOutfitIndex(0);
+    setIsSheetCollapsed(isMobile);
   };
 
   const handleStartOver = () => {
@@ -221,24 +222,35 @@ const App: React.FC = () => {
 
             {/* Sidebar */}
             <aside
-              className={`absolute md:relative bottom-0 right-0 w-full md:w-80 glass-card border-t md:border-t-0 md:border-l border-opacity-20 transition-transform duration-300 z-10 ${
-                isSheetCollapsed ? 'translate-y-[calc(100%-3rem)]' : 'translate-y-0'
-              } md:translate-y-0 max-h-[60vh] md:max-h-none`}
+              className={`absolute md:relative bottom-0 right-0 w-full md:w-80 glass-card border-t md:border-t-0 md:border-l border-opacity-20 transition-all duration-300 z-10 ${
+                isSheetCollapsed ? 'h-14' : 'h-[70vh]'
+              } md:h-auto md:translate-y-0`}
             >
               {/* Mobile Toggle */}
               <button
                 onClick={() => setIsSheetCollapsed(!isSheetCollapsed)}
-                className="md:hidden w-full h-12 flex-center glass-card border-b border-opacity-20"
+                className="md:hidden w-full h-14 flex-center glass-card border-b border-opacity-20"
                 aria-label={isSheetCollapsed ? 'Expand panel' : 'Collapse panel'}
               >
-                {isSheetCollapsed ?
-                  <ChevronUpIcon className="w-6 h-6" /> :
-                  <ChevronDownIcon className="w-6 h-6" />
-                }
+                <div className="flex items-center gap-2">
+                  {isSheetCollapsed ? (
+                    <>
+                      <ChevronUpIcon className="w-5 h-5" />
+                      <span className="text-sm font-medium">View Collection</span>
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDownIcon className="w-5 h-5" />
+                      <span className="text-sm font-medium">Hide Collection</span>
+                    </>
+                  )}
+                </div>
               </button>
 
               {/* Sidebar Content */}
-              <div className="p-4 md:p-6 pb-6 md:pb-20 overflow-y-auto h-[calc(60vh-3rem)] md:h-full space-y-6 md:space-y-8">
+              <div className={`p-4 md:p-6 pb-6 md:pb-20 overflow-y-auto space-y-6 md:space-y-8 ${
+                isSheetCollapsed ? 'hidden' : 'h-[calc(70vh-3.5rem)]'
+              } md:block md:h-full`}>
                 {error && (
                   <div className="glass-card p-4 border-red-500 border" role="alert">
                     <p className="font-semibold text-red-400 mb-1">Error</p>
